@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Teste1.Models;
-using static Teste1.Context.AppdbContext;
+using APIconcessionaria.Models;
+using static APIconcessionaria.Context.AppdbContext;
 
 namespace Teste1.Controllers
 {

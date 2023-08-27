@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using Teste1.Models;
+using APIconcessionaria.Models;
 
-namespace Teste1.Context
+namespace APIconcessionaria.Context
 {
     public class AppdbContext
     {
@@ -16,7 +15,14 @@ namespace Teste1.Context
             public DbSet<Carro> Carros { get; set; }
 
             public DbSet<Usuario> Usuarios { get; set; }
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                modelBuilder.Entity<Carro>()
+                    .Property(c => c.Preco)
+                    .HasColumnType("decimal(18,2)");
 
+                base.OnModelCreating(modelBuilder);
+            }
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 IConfiguration configuration = new ConfigurationBuilder()

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Teste1.Models
+namespace APIconcessionaria.Models
 {
     public class Carro
     {
@@ -14,5 +14,7 @@ namespace Teste1.Models
         public string? Cor { get; set; }
         public string? Motor { get; set; }
         public int Potencia { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Preco { get; set; }
     }
 }

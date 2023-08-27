@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using static Teste1.Context.AppdbContext;
+using static APIconcessionaria.Context.AppdbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Teste1.Models
+namespace APIconcessionaria.Models
 {
     public class Usuario
     {
