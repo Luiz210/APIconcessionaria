@@ -13,6 +13,7 @@ namespace APIconcessionaria.Context
             }
 
             public DbSet<Carro> Carros { get; set; }
+            public DbSet<ImagemCarro> ImagensCarros { get; set; }
 
             public DbSet<Usuario> Usuarios { get; set; }
             protected override void OnModelCreating(ModelBuilder modelBuilder)

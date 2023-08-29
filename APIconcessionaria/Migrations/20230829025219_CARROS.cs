@@ -20,7 +20,8 @@ namespace APIconcessionaria.Migrations
                     Combustivel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Motor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Potencia = table.Column<int>(type: "int", nullable: false)
+                    Potencia = table.Column<int>(type: "int", nullable: false),
+                    Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,16 +41,37 @@ namespace APIconcessionaria.Migrations
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ImagensCarros",
+                columns: table => new
+                {
+                    CarroId = table.Column<int>(type: "int", nullable: false),
+                    NomeArquivo = table.Column<byte[]>(type: "VARBINARY(MAX)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImagensCarros", x => x.CarroId);
+                    table.ForeignKey(
+                        name: "FK_ImagensCarros_Carros_CarroId",
+                        column: x => x.CarroId,
+                        principalTable: "Carros",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Carros");
+                name: "ImagensCarros");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "Carros");
         }
     }
 }

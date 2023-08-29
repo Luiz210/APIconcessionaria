@@ -70,6 +70,30 @@ namespace APIconcessionaria.Migrations
 
                     b.ToTable("Usuarios");
                 });
+
+            modelBuilder.Entity("ImagemCarro", b =>
+                {
+                    b.Property<int>("CarroId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("NomeArquivo")
+                        .HasColumnType("VARBINARY(MAX)");
+
+                    b.HasKey("CarroId");
+
+                    b.ToTable("ImagensCarros");
+                });
+
+            modelBuilder.Entity("ImagemCarro", b =>
+                {
+                    b.HasOne("APIconcessionaria.Models.Carro", "Carro")
+                        .WithMany()
+                        .HasForeignKey("CarroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Carro");
+                });
 #pragma warning restore 612, 618
         }
     }
