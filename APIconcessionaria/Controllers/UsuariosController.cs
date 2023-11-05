@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using APIconcessionaria.Models;
 using static APIconcessionaria.Context.AppdbContext;
+using APIconcessionaria.ViewModel;
 
 namespace Teste1.Controllers
 {
@@ -92,5 +93,45 @@ namespace Teste1.Controllers
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UsuarioViewModel model)
+        {
+            var usuario = await _context.Usuarios
+                .Where(u => u.Email == model.Email && u.Senha == model.Senha)
+                .FirstOrDefaultAsync();
+
+            if (usuario != null)
+            {
+                var usuarioComTipo = new
+                {
+                    Id = usuario.Id,
+                    NomeUsuario = usuario.NomeUsuario,
+                    Tipo = usuario.Tipo
+                };
+
+                if (!string.IsNullOrEmpty(model.Email))
+                {
+                    var usuarioComEmail = await _context.Usuarios
+                        .Where(u => u.Email == model.Email)
+                        .Select(u => new UsuarioComEmailViewModel { Id = u.Id })
+                        .FirstOrDefaultAsync();
+
+                    if (usuarioComEmail != null)
+                    {
+                        return Ok(new
+                        {
+                            Usuario = usuarioComTipo,
+                            IdDoEmail = usuarioComEmail.Id
+                        });
+                    }
+                }
+
+                return Ok(usuarioComTipo);
+            }
+
+            return Unauthorized("Credenciais inválidas.");
+        }
+
     }
 }

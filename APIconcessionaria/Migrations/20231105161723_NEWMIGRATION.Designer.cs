@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIconcessionaria.Migrations
 {
     [DbContext(typeof(AppdbContext.AppDbContext))]
-    [Migration("20230829025219_CARROS")]
-    partial class CARROS
+    [Migration("20231105161723_NEWMIGRATION")]
+    partial class NEWMIGRATION
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,14 +20,18 @@ namespace APIconcessionaria.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:CheckConstraint:CK_Usuario_Tipo", "Tipo IN (0, 1)");
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("APIconcessionaria.Models.Carro", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Ano")
                         .HasColumnType("int");
@@ -55,10 +59,40 @@ namespace APIconcessionaria.Migrations
                     b.ToTable("Carros");
                 });
 
+            modelBuilder.Entity("APIconcessionaria.Models.Orders", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CarroId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Formadepagamento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("APIconcessionaria.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Cpf")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -68,6 +102,13 @@ namespace APIconcessionaria.Migrations
 
                     b.Property<string>("Senha")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Tipo")
+                        .HasMaxLength(1)
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

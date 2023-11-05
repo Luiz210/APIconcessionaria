@@ -6,7 +6,7 @@ namespace APIconcessionaria.Models
     public class Carro
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string? Nome { get; set; }
         public int Ano { get; set; }

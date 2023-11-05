@@ -14,7 +14,7 @@ namespace APIconcessionaria.Context
 
             public DbSet<Carro> Carros { get; set; }
             public DbSet<ImagemCarro> ImagensCarros { get; set; }
-
+            public DbSet<Orders> Orders { get; set; }
             public DbSet<Usuario> Usuarios { get; set; }
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
@@ -23,6 +23,14 @@ namespace APIconcessionaria.Context
                     .HasColumnType("decimal(18,2)");
 
                 base.OnModelCreating(modelBuilder);
+            
+
+                modelBuilder.Entity<Usuario>()
+                    .Property(c => c.Tipo)
+                    .HasMaxLength(1);
+
+                    
+                modelBuilder.HasAnnotation("SqlServer:CheckConstraint:CK_Usuario_Tipo", "Tipo IN (0, 1)");
             }
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
